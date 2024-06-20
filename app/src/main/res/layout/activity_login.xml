@@ -92,13 +92,22 @@
                 android:textColor="#707070"
                 android:textSize="18sp" />
 
+
         </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/chkRecordar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:text="Recordar Contraseña" />
 
         <TextView
             android:id="@+id/tvEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="12dp"
             android:text="¿No Recuerdas tu Contraseña? Recuperalo aquí"
             android:textAlignment="center" />
 
@@ -106,7 +115,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
             <View
@@ -134,6 +143,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:background="#707070" />
+
 
         </LinearLayout>
 
