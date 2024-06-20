@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="green">#068251</color>
+    <color name="dark_blue">#32357a</color>
+    <color name="light_blue">#f2f1f6</color>
+    <color name="snow">#FFFAFA</color>
+    <color name="colorVerde">#4CAF50</color>
+    <color name="primaryGreen">#4CAF50</color> <!-- Verde primario -->
+    <color name="secondaryBackground">#F5F5F5</color> <!-- Gris claro o blanco -->
+    <color name="buttonGreen">#388E3C</color> <!-- Verde más oscuro para el botón -->
+</resources>

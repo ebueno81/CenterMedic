@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.FragmentPaciente">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="128dp"
+            android:layout_height="69dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:text="Crear
+            Paciente"
+            android:textColor="@color/green"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+        <LinearLayout
+            android:layout_width="409dp"
+            android:layout_height="520dp"
+            android:orientation="vertical"
+            android:layout_marginTop="0dp"
+            android:padding="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3">
+
+            <TextView
+                android:id="@+id/tvNombres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:text="Nombres"
+                android:textColor="@color/material_dynamic_neutral40"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/editext_background"
+                android:ems="10"
+                android:hint="Ingresa tu Nombre"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="#707070"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Apellidos"
+                android:textColor="@color/material_dynamic_neutral40"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/etApePat"
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/editext_background"
+                    android:ems="10"
+                    android:hint="Apellido Paterno"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColor="#707070"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etApeMat"
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/editext_background"
+                    android:ems="10"
+                    android:hint="Apellido Materno"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColor="#707070"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="82dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvDni1"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="N° DNI"
+                        android:textColor="@color/material_dynamic_neutral40"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etDni1"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/editext_background"
+                        android:ems="10"
+                        android:hint="Ingresa tu DNI"
+                        android:inputType="text"
+                        android:padding="12dp"
+                        android:textColor="#707070"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvNaci2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Nacimiento"
+                        android:textColor="@color/material_dynamic_neutral40"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etStartDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_background"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="Nacimiento"
+                        android:padding="10dp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCelular"
+                        android:layout_width="78dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Celular"
+                        android:textColor="@color/material_dynamic_neutral40"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etCelular1"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/editext_background"
+                        android:ems="10"
+                        android:hint="Celular"
+                        android:inputType="text"
+                        android:padding="12dp"
+                        android:textColor="#707070"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="170dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTelefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Telefono"
+                        android:textColor="@color/material_dynamic_neutral40"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etTelefono1"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/editext_background"
+                        android:ems="10"
+                        android:hint="Telefono"
+                        android:inputType="text"
+                        android:padding="12dp"
+                        android:textColor="#707070"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Correo"
+                android:textColor="@color/material_dynamic_neutral40"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/editext_background"
+                android:ems="10"
+                android:hint="Ingresa tu Correo"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="#707070"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="10dp"
+
+                android:background="@drawable/button_background"
+                android:text="Grabar Paciente"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
