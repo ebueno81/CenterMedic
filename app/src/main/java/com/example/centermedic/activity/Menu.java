@@ -3,6 +3,7 @@ package com.example.centermedic.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,12 +20,14 @@ import com.example.centermedic.R;
 import com.example.centermedic.adapter.TrendsAdapter;
 import com.example.centermedic.api.MySingleton;
 import com.example.centermedic.domain.TrendSDomain;
+import com.example.centermedic.utils.AlertUtils;
 
 import java.util.ArrayList;
 
 public class Menu extends AppCompatActivity {
     TextView tvUser1;
     CardView cvPaciente;
+    ImageView ivCloseOut;
     LinearLayout llCitas, llDoctor, llMnuHome, llMnuDoctor, llMnuCita, llMnuPaciente, llMnuUser;
     private RecyclerView.Adapter adapterTrendsList;
     private  RecyclerView recyclerViewTrends;
@@ -43,12 +46,35 @@ public class Menu extends AppCompatActivity {
         llMnuPaciente = findViewById(R.id.llMnuPaciente);
         llMnuUser = findViewById(R.id.llMnuUser);
 
+        ivCloseOut = findViewById(R.id.ivCloseOut);
         tvUser1 = findViewById(R.id.tvUser1);
         cvPaciente = findViewById(R.id.cvPaciente1);
         MySingleton singleton = MySingleton.getInstance();
         tvUser1.setText("Hola, " + singleton.getValor());
         initRecyclerView();
 
+        ivCloseOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertUtils.showYesNoDialog(Menu.this, "Confirmación", "¿Estás seguro de que deseas continuar?", new AlertUtils.YesNoListener() {
+                    @Override
+                    public void onYes() {
+                        Intent intent = new Intent(Menu.this, Login.class);
+                        startActivity(intent);
+
+                        finishAffinity();
+                    }
+
+                    @Override
+                    public void onNo() {
+
+                    }
+
+
+                });
+
+            }
+        });
         cvPaciente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
