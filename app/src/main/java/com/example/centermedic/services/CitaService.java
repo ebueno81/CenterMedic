@@ -22,4 +22,6 @@ public interface CitaService {
     Call<ResponseDTO<CitaDTO>> listarRegistro(@Query("codigoUsuario") int codigoUsuario);
     @GET("cita/obtener")
     Call<ResponseDTO<CitaDTO>> obtenerRegistro(@Query("codigoCita") int codigoCita);
+    @GET("cita/correo")
+    Call<ResponseDTO> envioCorreo(@Query("codigo") int codigo);
 }

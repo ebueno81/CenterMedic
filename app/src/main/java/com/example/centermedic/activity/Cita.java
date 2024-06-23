@@ -26,6 +26,7 @@ import com.example.centermedic.clases.CitaDTO;
 import com.example.centermedic.clases.EspecialidadDTO;
 import com.example.centermedic.clases.HorarioDTO;
 import com.example.centermedic.clases.PacienteDTO;
+import com.example.centermedic.clases.ResponseDTO;
 import com.example.centermedic.clases.UserDTO;
 import com.example.centermedic.dataholder.DataHolder;
 import com.example.centermedic.dataholder.DataHolderEspecialidad;
@@ -203,6 +204,21 @@ public class Cita extends AppCompatActivity {
                 if(response.isSuccessful()){
                     ICitaService responseDTO = response.body();
                     if(responseDTO.status){
+
+                        myCitaService.envioCorreo(Integer.parseInt(responseDTO.msg)).enqueue(new Callback<ResponseDTO>() {
+                            @Override
+                            public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
+                                ResponseDTO responseDTO = response.body();
+
+                                Toast.makeText(getApplicationContext(),"1. Se envio confirmacion de usuario a su correo...",Toast.LENGTH_LONG);
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseDTO> call, Throwable t) {
+                                Toast.makeText(getApplicationContext(),"2. Hubo un error al momento de enviar el correo...",Toast.LENGTH_LONG);
+                            }
+                        });
+
                         Intent i1 = new Intent(getApplicationContext(), Menu.class);
                         startActivity(i1);
                         finish();
