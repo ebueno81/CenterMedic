@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.centermedic.R;
 import com.example.centermedic.api.MyApi;
 import com.example.centermedic.api.MySingleton;
+import com.example.centermedic.clases.ResponseDTO;
 import com.example.centermedic.implementacion.IUserService;
 import com.example.centermedic.clases.UserDTO;
 import com.example.centermedic.services.UserService;
@@ -85,12 +86,25 @@ public class UserRegister extends AppCompatActivity {
                         singleton.setIdUsuario(userDTOS.idUsuario);
                         singleton.setValor(user.getUsuario1());
 
+                        myUserservice.envioCorreo(userDTOS.idUsuario).enqueue(new Callback<ResponseDTO>() {
+                            @Override
+                            public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
+                                ResponseDTO responseDTO = response.body();
+
+                                Toast.makeText(getApplicationContext(),"1. Se envio confirmacion de usuario a su correo...",Toast.LENGTH_LONG);
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseDTO> call, Throwable t) {
+                                Toast.makeText(getApplicationContext(),"2. Hubo un error al momento de enviar el correo...",Toast.LENGTH_LONG);
+                            }
+                        });
 
                         Intent i1 = new Intent(getApplicationContext(), Menu.class);
                         startActivity(i1);
                         finish();
                     }else{
-                        Toast.makeText(getApplicationContext(),"1. Usuario o clave incorrecta...",Toast.LENGTH_LONG);
+                        Toast.makeText(getApplicationContext(),"3. Hubo un fallo de conexion...",Toast.LENGTH_LONG);
                         etUser.requestFocus();
                     }
                 }
@@ -103,4 +117,6 @@ public class UserRegister extends AppCompatActivity {
             }
         });
     }
+
+
 }
