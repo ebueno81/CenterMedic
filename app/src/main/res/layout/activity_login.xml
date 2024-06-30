@@ -24,8 +24,7 @@
         android:layout_height="76dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:text="Bienvenido,
-        Inicia Session"
+        android:text="@string/bienvenido"
         android:textColor="#ffffff"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -220,10 +219,11 @@
             android:layout_height="50dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/button_background"
-            android:text="Iniciar Session"
+            android:text="@string/inicio_session"
             android:textColor="#ffffff"
             android:textSize="18dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textAllCaps="false"/>
     </LinearLayout>
 
     <ProgressBar
