@@ -5,4 +5,6 @@
     <string name="inicio_session">Inicio Sessión</string>
     <string name="bienvenido">Bienvenido,
         Inicia Sessión</string>
+    <string name="buscar_sede">Busca tu Sede,
+        Mas cercana para ti!</string>
 </resources>

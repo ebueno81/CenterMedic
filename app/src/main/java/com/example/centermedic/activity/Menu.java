@@ -25,7 +25,7 @@ import com.example.centermedic.utils.AlertUtils;
 import java.util.ArrayList;
 
 public class Menu extends AppCompatActivity {
-    TextView tvUser1;
+    TextView tvUser1, tvSede;
     CardView cvPaciente;
     ImageView ivCloseOut;
     LinearLayout llCitas, llDoctor, llMnuHome, llMnuDoctor, llMnuCita, llMnuPaciente, llMnuUser;
@@ -37,6 +37,7 @@ public class Menu extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_menu);
 
+        tvSede = findViewById(R.id.tvSede);
         llCitas = findViewById(R.id.llCitas);
         llDoctor = findViewById(R.id.llDoctor);
 
@@ -52,6 +53,15 @@ public class Menu extends AppCompatActivity {
         MySingleton singleton = MySingleton.getInstance();
         tvUser1.setText("Hola, " + singleton.getValor());
         initRecyclerView();
+
+
+        tvSede.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Menu.this, Sede.class);
+                startActivity(intent);
+            }
+        });
 
         ivCloseOut.setOnClickListener(new View.OnClickListener() {
             @Override

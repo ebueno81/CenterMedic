@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -14,6 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CenterMedic"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCmiY-EOV5_hes2Vtn7R3zJen3pcA_-rYE" />
+
+        <activity
+            android:name=".activity.Sede"
+            android:exported="false" />
         <activity
             android:name=".activity.HorarioBuscar"
             android:exported="false" />
