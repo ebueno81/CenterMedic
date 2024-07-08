@@ -49,7 +49,7 @@ public class Cita extends AppCompatActivity {
     private int idEspecialidad=0;
     LinearLayout llPaciente, llHorario, llEspecial;
     TextView tvPaciente3,tvEspecialidad3, tvHorario3, tvDoctor2, tvConsultorio2;
-    AppCompatButton btnSave;
+    AppCompatButton btnSave, btnCancel;
     // Define un ActivityResultLauncher
     private ActivityResultLauncher<Intent> activityResultLauncher;
 
@@ -108,7 +108,14 @@ public class Cita extends AppCompatActivity {
         tvDoctor2 = findViewById(R.id.tvDoctor2);
         tvConsultorio2 = findViewById(R.id.tvConsultorio2);
         btnSave = findViewById(R.id.btnSave);
+        btnCancel = findViewById(R.id.btnCancel);
 
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

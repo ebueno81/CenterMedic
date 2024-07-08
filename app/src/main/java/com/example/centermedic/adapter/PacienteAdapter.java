@@ -46,7 +46,24 @@ public class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.MyView
         holder.tvSubTitle.setText(listDatos.get(position).getCorreo() );
         holder.tvSubTitle2.setText(listDatos.get(position).getNroDocumento());
 
-        int drawableResourceId = holder.itemView.getResources().getIdentifier(listDatos.get(position).getIdPaciente().toString(),"drawable",holder.itemView.getContext().getOpPackageName());
+       // int drawableResourceId = holder.itemView.getResources().getIdentifier(listDatos.get(position).getIdPaciente().toString(),"drawable",holder.itemView.getContext().getOpPackageName());
+
+        // Determinar qué imagen cargar según la posición
+        int drawableResourceId;
+        switch (position % 3) {
+            case 0:
+                drawableResourceId = holder.itemView.getResources().getIdentifier("doctora1", "drawable", holder.itemView.getContext().getOpPackageName());
+                break;
+            case 1:
+                drawableResourceId = holder.itemView.getResources().getIdentifier("profile", "drawable", holder.itemView.getContext().getOpPackageName());
+                break;
+            case 2:
+                drawableResourceId = holder.itemView.getResources().getIdentifier("pacienteenfermo", "drawable", holder.itemView.getContext().getOpPackageName());
+                break;
+            default:
+                drawableResourceId = holder.itemView.getResources().getIdentifier("default_image", "drawable", holder.itemView.getContext().getOpPackageName());
+                break;
+        }
         Glide.with(holder.itemView.getContext())
                 .load(drawableResourceId)
                 .transform(new GranularRoundedCorners(10,30,0,0))

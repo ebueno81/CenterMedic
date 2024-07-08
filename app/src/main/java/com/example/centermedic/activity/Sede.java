@@ -1,7 +1,5 @@
 package com.example.centermedic.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,30 +7,21 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.media3.common.util.Log;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.centermedic.R;
-import com.example.centermedic.adapter.EspecialidadAdapter;
 import com.example.centermedic.adapter.SedeAdapter;
 import com.example.centermedic.api.MyApi;
-import com.example.centermedic.clases.EspecialidadDTO;
 import com.example.centermedic.clases.ResponseDTO;
 import com.example.centermedic.clases.SedeDTO;
-import com.example.centermedic.dataholder.DataHolderEspecialidad;
-import com.example.centermedic.dataholder.DataHolderSede;
-import com.example.centermedic.services.EspecialidadService;
-import com.example.centermedic.services.OnItemClickListenerEspecialidad;
 import com.example.centermedic.services.OnItemClickListenerSede;
 import com.example.centermedic.services.SedeService;
-import com.example.centermedic.utils.AlertUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -58,7 +47,6 @@ public class Sede extends AppCompatActivity implements OnMapReadyCallback, Googl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_sede);
 
         etLatitud = findViewById(R.id.etLatitud);
@@ -70,23 +58,20 @@ public class Sede extends AppCompatActivity implements OnMapReadyCallback, Googl
         btnRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                        finish();
+                finish();
             }
         });
 
         etLatitud.setText("-11.9678154");
         etLongitud.setText("-76.9982021");
-     //   SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-       // mapFragment.getMapAsync(this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
             cargarSedes(0);
-          //  AlertUtils.showAlert(Sede.this, "Alerta...", "Fragmento inicializado ", false);
         } else {
             Toast.makeText(this, "Error al cargar el mapa", Toast.LENGTH_SHORT).show();
-        };
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -98,33 +83,27 @@ public class Sede extends AppCompatActivity implements OnMapReadyCallback, Googl
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        this.mMap.setOnMapClickListener(this);
-        this.mMap.setOnMapLongClickListener(this);
-        LatLng mexico = new LatLng(Double.parseDouble(etLatitud.getText().toString()),Double.parseDouble(etLongitud.getText().toString()));
-        mMap.addMarker(new MarkerOptions().position(mexico).title("San Juan"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(mexico));
-
-       // AlertUtils.showAlert(Sede.this, "Alerta...", "2. Si se agrego el mapa ", false);
-
+        mMap.setOnMapClickListener(this);
+        mMap.setOnMapLongClickListener(this);
+        LatLng defaultLocation = new LatLng(Double.parseDouble(etLatitud.getText().toString()), Double.parseDouble(etLongitud.getText().toString()));
+        mMap.addMarker(new MarkerOptions().position(defaultLocation).title("San Juan"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 15));
     }
 
     @Override
     public void onMapClick(@NonNull LatLng latLng) {
-        etLatitud.setText(("" + latLng.latitude));
-        etLongitud.setText(("" + latLng.longitude));
-
+        etLatitud.setText(String.valueOf(latLng.latitude));
+        etLongitud.setText(String.valueOf(latLng.longitude));
     }
 
     @Override
     public void onMapLongClick(@NonNull LatLng latLng) {
-        etLatitud.setText(("" + latLng.latitude));
-        etLongitud.setText(("" + latLng.longitude));
-
+        etLatitud.setText(String.valueOf(latLng.latitude));
+        etLongitud.setText(String.valueOf(latLng.longitude));
     }
 
-    public void cargarSedes(Integer codigo){
+    public void cargarSedes(Integer codigo) {
         progressBar.setVisibility(View.VISIBLE);
-        // Establece el LayoutManager
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
         Retrofit myRetrofit = MyApi.getInstance();
@@ -132,44 +111,38 @@ public class Sede extends AppCompatActivity implements OnMapReadyCallback, Googl
         myService.listarSede(codigo).enqueue(new Callback<ResponseDTO<SedeDTO>>() {
             @Override
             public void onResponse(Call<ResponseDTO<SedeDTO>> call, Response<ResponseDTO<SedeDTO>> response) {
+                progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
-                    ResponseDTO responseDTO = response.body();
-                    if (responseDTO.status){
+                    ResponseDTO<SedeDTO> responseDTO = response.body();
+                    if (responseDTO.status) {
                         List<SedeDTO> lstDatos = responseDTO.value;
                         SedeAdapter adapterDatos = new SedeAdapter(lstDatos, Sede.this);
                         recycler.setAdapter(adapterDatos);
-                        progressBar.setVisibility(View.GONE);
-                    }else{
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(),"2. No existen registros..",Toast.LENGTH_LONG);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No existen registros.", Toast.LENGTH_LONG).show();
                         recycler.setAdapter(null);
                     }
-
                 } else {
-                    progressBar.setVisibility(View.GONE);
-                    System.out.println("Error: " + response.code());
+                    Toast.makeText(getApplicationContext(), "Error: " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseDTO<SedeDTO>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(),"1. Hubo un problema con la conexion... Error: " + t.getCause(),Toast.LENGTH_LONG);
+                Toast.makeText(getApplicationContext(), "Hubo un problema con la conexión. Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
     @Override
     public void onItemClick(SedeDTO item) {
-
-        etLongitud.setText(item.getLongitud());
         etLatitud.setText(item.getLatitud());
+        etLongitud.setText(item.getLongitud());
 
-        //   mMap = this.mMap;
-        this.mMap.setOnMapClickListener(this);
-        this.mMap.setOnMapLongClickListener(this);
-        LatLng mexico = new LatLng(Double.parseDouble(etLongitud.getText().toString()),Double.parseDouble(etLatitud.getText().toString()));
-        mMap.addMarker(new MarkerOptions().position(mexico).title(item.getNombre()));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(mexico));
+        LatLng selectedLocation = new LatLng(Double.parseDouble(item.getLatitud()), Double.parseDouble(item.getLongitud()));
+        mMap.clear();
+        mMap.addMarker(new MarkerOptions().position(selectedLocation).title(item.getNombre()));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 15));
     }
 }

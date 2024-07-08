@@ -36,14 +36,32 @@ public class MedicoListarAdapter extends RecyclerView.Adapter<MedicoListarAdapte
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onBindViewHolder(@NonNull MedicoListarAdapter.MyViewHolder holder, int position) {
+//        holder.tvTitle.setText(listDatos.get(position).getNombres() + " " + listDatos.get(position).getApellidoPaterno() + " " + listDatos.get(position).getApellidoMaterno());
+//        holder.tvSubTitle.setText(listDatos.get(position).getEspecialidad() );
+//        holder.tvSubTitle2.setText(listDatos.get(position).getCelular());
+//
+//        int drawableResourceId = holder.itemView.getResources().getIdentifier("profile","drawable",holder.itemView.getContext().getOpPackageName());
+//        Glide.with(holder.itemView.getContext())
+//                .load(drawableResourceId)
+//                .transform(new GranularRoundedCorners(10,30,0,0))
+//                .into(holder.ivImage);
         holder.tvTitle.setText(listDatos.get(position).getNombres() + " " + listDatos.get(position).getApellidoPaterno() + " " + listDatos.get(position).getApellidoMaterno());
-        holder.tvSubTitle.setText(listDatos.get(position).getEspecialidad() );
+        holder.tvSubTitle.setText(listDatos.get(position).getEspecialidad());
         holder.tvSubTitle2.setText(listDatos.get(position).getCelular());
 
-        int drawableResourceId = holder.itemView.getResources().getIdentifier("1","drawable",holder.itemView.getContext().getOpPackageName());
+        // Determinar qué imagen cargar según la posición
+        int drawableResourceId;
+        if (position % 2 == 0) {
+            // Posición par
+            drawableResourceId = holder.itemView.getResources().getIdentifier("doctora1", "drawable", holder.itemView.getContext().getOpPackageName());
+        } else {
+            // Posición impar
+            drawableResourceId = holder.itemView.getResources().getIdentifier("profile", "drawable", holder.itemView.getContext().getOpPackageName());
+        }
+
         Glide.with(holder.itemView.getContext())
                 .load(drawableResourceId)
-                .transform(new GranularRoundedCorners(10,30,0,0))
+                .transform(new GranularRoundedCorners(10, 30, 0, 0))
                 .into(holder.ivImage);
 
     }

@@ -2,6 +2,7 @@ package com.example.centermedic.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import com.example.centermedic.clases.ResponseDTO;
 import com.example.centermedic.implementacion.IUserService;
 import com.example.centermedic.clases.UserDTO;
 import com.example.centermedic.services.UserService;
+import com.example.centermedic.utils.AlertUtils;
 
 import java.util.Map;
 
@@ -31,7 +33,7 @@ import retrofit2.Retrofit;
 public class UserRegister extends AppCompatActivity {
 
     EditText etName,etEmail1, etUser,etKey,etConfirm;
-    Button btnSave;
+    Button btnSave, btnCancel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,16 +46,26 @@ public class UserRegister extends AppCompatActivity {
         etUser    = findViewById(R.id.etUser);
         etConfirm = findViewById(R.id.etConfirm);
         btnSave = findViewById(R.id.btnSave);
+        btnCancel = findViewById(R.id.btnCancel);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etKey.getText().toString().equals(etConfirm.getText().toString())){
-                    saveUser();
-                }else{
-                    Toast.makeText(getApplicationContext(),"1. Clave incorrecta...",Toast.LENGTH_LONG);
-                  //  saveUser();
+                if (validarDatos()){
+                    if (etKey.getText().toString().equals(etConfirm.getText().toString())){
+                        saveUser();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"1. Clave incorrecta...",Toast.LENGTH_LONG);
+                        //  saveUser();
+                    }
                 }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -63,6 +75,26 @@ public class UserRegister extends AppCompatActivity {
         });
     }
 
+    private boolean validarDatos(){
+        if (TextUtils.isEmpty(etConfirm.getText().toString())||TextUtils.isEmpty(etKey.getText().toString())) {
+            AlertUtils.showAlert(this, "Alerta...", "La clave no puede ser vacia...", false);
+            return false;
+        }
+        if (TextUtils.isEmpty(etEmail1.getText().toString())) {
+            AlertUtils.showAlert(this, "Alerta...", "El correo no puede ser vacio...", false);
+            return false;
+        }
+        if (TextUtils.isEmpty(etUser.getText().toString())) {
+            AlertUtils.showAlert(this, "Alerta...", "El usuario no puede ser vacio...", false);
+            return false;
+        }
+        if (TextUtils.isEmpty(etName.getText().toString())) {
+            AlertUtils.showAlert(this, "Alerta...", "El nombre no puede ser vacio...", false);
+            return false;
+        }
+
+        return true;
+    }
     private void saveUser(){
         UserDTO user = new UserDTO();
         user.setUsuario1(etUser.getText().toString());

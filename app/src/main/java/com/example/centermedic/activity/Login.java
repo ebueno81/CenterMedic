@@ -78,7 +78,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i1 = new Intent(getApplicationContext(), UserRegister.class);
                 startActivity(i1);
-                finish();
+            //    finish();
             }
         });
 
@@ -87,7 +87,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i1 = new Intent(getApplicationContext(), UserRegister.class);
                 startActivity(i1);
-                finish();
+              //  finish();
             }
         });
 

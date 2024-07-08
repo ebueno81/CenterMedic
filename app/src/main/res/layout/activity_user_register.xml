@@ -30,7 +30,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-130dp"
-                android:text="Crear Cuenta"
+                android:layout_marginLeft="10sp"
+                android:text="Crear
+
+                Cuenta"
                 android:textColor="#ffffff"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -81,7 +84,7 @@
             android:background="@drawable/editext_background"
             android:ems="10"
             android:hint="Ingresa tu Email"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:padding="12dp"
             android:textColor="#707070"
             android:textSize="16sp" />

@@ -42,7 +42,21 @@ public class HorarioAdapter extends RecyclerView.Adapter<HorarioAdapter.MyViewHo
         holder.tvSubTitle.setText(listDatos.get(position).getEspecialidad());
         holder.tvSubTitle2.setText(listDatos.get(position).getDoctor());
 
-        int drawableResourceId = holder.itemView.getResources().getIdentifier("1","drawable",holder.itemView.getContext().getOpPackageName());
+        int drawableResourceId;
+        switch (position % 3) {
+            case 0:
+                drawableResourceId = holder.itemView.getResources().getIdentifier("settings", "drawable", holder.itemView.getContext().getOpPackageName());
+                break;
+            case 1:
+                drawableResourceId = holder.itemView.getResources().getIdentifier("homebutton2", "drawable", holder.itemView.getContext().getOpPackageName());
+                break;
+            case 2:
+                drawableResourceId = holder.itemView.getResources().getIdentifier("social", "drawable", holder.itemView.getContext().getOpPackageName());
+                break;
+            default:
+                drawableResourceId = holder.itemView.getResources().getIdentifier("default_image", "drawable", holder.itemView.getContext().getOpPackageName());
+                break;
+        }
         Glide.with(holder.itemView.getContext())
                 .load(drawableResourceId)
                 .transform(new GranularRoundedCorners(10,30,0,0))
