@@ -3,6 +3,7 @@ package com.example.centermedic.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 
 public class Menu extends AppCompatActivity {
     TextView tvUser1, tvSede;
+    EditText etBuscar;
     CardView cvPaciente;
     ImageView ivCloseOut;
     LinearLayout llCitas, llDoctor, llMnuHome, llMnuDoctor, llMnuCita, llMnuPaciente, llMnuUser;
@@ -47,17 +49,28 @@ public class Menu extends AppCompatActivity {
         llMnuPaciente = findViewById(R.id.llMnuPaciente);
         llMnuUser = findViewById(R.id.llMnuUser);
 
+        etBuscar = findViewById(R.id.etBuscar);
+
         ivCloseOut = findViewById(R.id.ivCloseOut);
         tvUser1 = findViewById(R.id.tvUser1);
+
         cvPaciente = findViewById(R.id.cvPaciente1);
         MySingleton singleton = MySingleton.getInstance();
         tvUser1.setText("Hola, " + singleton.getValor());
         initRecyclerView();
 
+        etBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Menu.this, Sede.class);
+                startActivity(intent);
+            }
+        });
 
         tvSede.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(Menu.this, Sede.class);
                 startActivity(intent);
             }
@@ -179,4 +192,6 @@ public class Menu extends AppCompatActivity {
         intent.putExtra("ejecutarFuncion", true); // Pasar datos adicionales al Intent
         startActivity(intent);
     }
+
+
 }
