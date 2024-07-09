@@ -144,9 +144,12 @@ public class Login extends AppCompatActivity {
                 if(response.isSuccessful()){
                     ResponseDTO responseDTO = response.body();
                     List<UserDTO> userDTOS = responseDTO.value;
+                    UserDTO user1 = new UserDTO();
+
                     if(responseDTO.status){
-                        singleton.setValor(user.usuario1);
-                        singleton.setIdUsuario(user.idUsuario);
+                        user1 = userDTOS.get(0);
+                        singleton.setValor(user1.usuario1);
+                        singleton.setIdUsuario(user1.idUsuario);
 
                         // data saved //
                         if (checkBoxRememberMe.isChecked()) {

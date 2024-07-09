@@ -86,6 +86,17 @@
 
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/ibCancel"
+        android:layout_width="65dp"
+        android:layout_height="67dp"
+        android:layout_gravity="bottom|left"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/white"
+        android:gravity="center_vertical|center_horizontal"
+        android:src="@drawable/turnback64" />
 
     <ImageButton
         android:id="@+id/ibNuevo"

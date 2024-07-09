@@ -35,13 +35,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
-                android:text="Buscar Paciente"
+                android:text="Nombres"
                 android:textColor="@color/material_dynamic_neutral40"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <Spinner
-                android:id="@+id/spPaciente"
+            <TextView
+                android:id="@+id/tvNombrePaciente"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
@@ -68,8 +68,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/etApePat"
+                <TextView
+                    android:id="@+id/tvApePat"
                     android:layout_width="170dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
@@ -82,7 +82,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/etApeMat"
+                    android:id="@+id/tvApeMat"
                     android:layout_width="170dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="5dp"
@@ -116,14 +116,14 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <Spinner
-                        android:id="@+id/spEspecialidad"
+                    <TextView
+                        android:id="@+id/tvEspecialidad"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/editext_background"
                         android:ems="10"
-                        android:hint="Ingresa tu Nombre"
+                        android:hint="Especialidad"
                         android:inputType="text"
                         android:padding="10dp"
                         android:textColor="#707070"
@@ -147,14 +147,14 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <Spinner
-                        android:id="@+id/spMedico"
+                    <TextView
+                        android:id="@+id/tvMedico"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/editext_background"
                         android:ems="10"
-                        android:hint="Ingresa tu Nombre"
+                        android:hint="Doctor"
                         android:inputType="text"
                         android:padding="10dp"
                         android:textColor="#707070"
@@ -186,14 +186,14 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/etFecha"
+                    <TextView
+                        android:id="@+id/tvFecha"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/editext_background"
                         android:ems="10"
-                        android:hint="Celular"
+                        android:hint="Fecha"
                         android:inputType="text"
                         android:padding="12dp"
                         android:textColor="#707070"
@@ -216,14 +216,14 @@
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/etHora"
+                    <TextView
+                        android:id="@+id/tvHora"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/editext_background"
                         android:ems="10"
-                        android:hint="Telefono"
+                        android:hint="Horario"
                         android:inputType="text"
                         android:padding="12dp"
                         android:textColor="#707070"
@@ -242,30 +242,31 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/etConsultorio"
+            <TextView
+                android:id="@+id/tvConsultorio"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/editext_background"
                 android:ems="10"
-                android:hint="Ingresa tu Correo"
+                android:hint="Consultorio"
                 android:inputType="text"
                 android:padding="12dp"
                 android:textColor="#707070"
                 android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSave"
+                android:id="@+id/btnCancel"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="10dp"
 
                 android:background="@drawable/button_background"
-                android:text="Grabar Paciente"
+                android:text="Regresar"
                 android:textColor="#ffffff"
                 android:textSize="18dp"
+                android:textAllCaps="false"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

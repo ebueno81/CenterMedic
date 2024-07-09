@@ -7,7 +7,9 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.example.centermedic.dataholder.DataHolder;
 import com.example.centermedic.services.OnItemClickListener;
 import com.example.centermedic.services.PacienteService;
 import com.example.centermedic.utils.KeyboardUtils;
+import com.example.centermedic.datahelper.SearchDatabaseHelper;
 
 import java.util.List;
 
@@ -42,6 +45,9 @@ public class PacienteBuscar extends AppCompatActivity implements OnItemClickList
     private ProgressBar progressBar;
     private Handler handler = new Handler();
     private Runnable runnable;
+    private SearchDatabaseHelper dbHelper;
+    ImageView ivCancel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +57,23 @@ public class PacienteBuscar extends AppCompatActivity implements OnItemClickList
         progressBar = findViewById(R.id.progressBar);
         etBuscar = findViewById(R.id.etBuscar);
         recycler = findViewById(R.id.recycler_id);
-        cargarPaciente("");
+        ivCancel = findViewById(R.id.ivCancel);
+
+        ivCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        dbHelper = new SearchDatabaseHelper(this);
+
+        // Recuperar el último valor de búsqueda al iniciar la actividad
+        String lastSearch = dbHelper.getLastSearchText();
+        etBuscar.setText(lastSearch);
+
+        cargarPaciente(lastSearch);
+        //cargarPaciente("");
 
         etBuscar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -69,7 +91,12 @@ public class PacienteBuscar extends AppCompatActivity implements OnItemClickList
 
             @Override
             public void afterTextChanged(Editable s) {
-                // Crear un nuevo runnable para ejecutar después de 3 segundos
+                // Guardar el texto de búsqueda en la base de datos
+                String searchText = s.toString().trim(); // Asegúrate de limpiar el texto si es necesario
+                dbHelper.insertSearchText(searchText);
+                dbHelper.updateSearchText(searchText);
+
+                // Crear un nuevo runnable para ejecutar después de 2 segundos
                 runnable = new Runnable() {
                     @Override
                     public void run() {

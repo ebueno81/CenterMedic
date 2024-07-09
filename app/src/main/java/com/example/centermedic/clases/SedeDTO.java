@@ -7,6 +7,10 @@ public class SedeDTO {
     String longitud;
     Integer activo;
 
+    public SedeDTO(String latitude, String longitude, String name) {
+
+    }
+
     public Integer getIdSede() {
         return idSede;
     }

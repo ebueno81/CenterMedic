@@ -15,7 +15,7 @@ public class PacienteDTO {
 
     String nroDocumento;
 
-    Date fechaNacimiento;
+    //Date fechaNacimiento;
 
     String telefono;
 
@@ -25,11 +25,9 @@ public class PacienteDTO {
 
     Integer estado;
 
-    Date FechaRegistro;
-
-    Date FechaModificacion;
 
     Integer IdUsuario;
+
     String fechaNaci;
 
     public String getFechaNaci() {
@@ -88,13 +86,13 @@ public class PacienteDTO {
         this.nroDocumento = nroDocumento;
     }
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
+//    public Date getFechaNacimiento() {
+//        return fechaNacimiento;
+//    }
+//
+//    public void setFechaNacimiento(Date fechaNacimiento) {
+//        this.fechaNacimiento = fechaNacimiento;
+//    }
 
     public String getTelefono() {
         return telefono;
@@ -128,21 +126,7 @@ public class PacienteDTO {
         this.estado = estado;
     }
 
-    public Date getFechaRegistro() {
-        return FechaRegistro;
-    }
 
-    public void setFechaRegistro(Date fechaRegistro) {
-        FechaRegistro = fechaRegistro;
-    }
-
-    public Date getFechaModificacion() {
-        return FechaModificacion;
-    }
-
-    public void setFechaModificacion(Date fechaModificacion) {
-        FechaModificacion = fechaModificacion;
-    }
 
     public Integer getIdUsuario() {
         return IdUsuario;
@@ -152,11 +136,5 @@ public class PacienteDTO {
         IdUsuario = idUsuario;
     }
 
-//    public PacienteDTO(Integer idPaciente, String nombres, String apellidoPaterno, String apellidoMaterno, String nroDocumento) {
-//        this.idPaciente = idPaciente;
-//        this.nombres = nombres;
-//        this.apellidoPaterno = apellidoPaterno;
-//        this.apellidoMaterno = apellidoMaterno;
-//        this.nroDocumento = nroDocumento;
-//    }
+
 }

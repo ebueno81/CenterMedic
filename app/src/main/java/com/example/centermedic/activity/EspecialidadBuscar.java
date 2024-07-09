@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class EspecialidadBuscar extends AppCompatActivity implements OnItemClick
     private Handler handler = new Handler();
     private Runnable runnable;
     private ProgressBar progressBar;
+    ImageView ivCancel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,13 @@ public class EspecialidadBuscar extends AppCompatActivity implements OnItemClick
         recycler = findViewById(R.id.recycler_id);
         cargarEspecialidad("");
 
-
+        ivCancel = findViewById(R.id.ivCancel);
+        ivCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         etBuscar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

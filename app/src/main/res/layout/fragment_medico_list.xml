@@ -64,5 +64,5 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:backgroundTint="@color/white"
-        android:src="@drawable/plus" />
+        android:src="@drawable/turnback64" />
 </FrameLayout>

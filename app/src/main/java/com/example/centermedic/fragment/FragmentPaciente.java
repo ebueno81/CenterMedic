@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ import retrofit2.Retrofit;
 
 public class FragmentPaciente extends Fragment {
 
-    Button btnSave;
+    Button btnSave, btnCancel;
     EditText etName, etCorreo, etDni, etStartDate, etFono, etCelular, etApePaterno, etApeMaterno;
 
     PacienteDTO paciente;
@@ -69,13 +70,29 @@ public class FragmentPaciente extends Fragment {
         etDni = view.findViewById(R.id.etDni1);
         etFono = view.findViewById(R.id.etTelefono1);
         etCelular = view.findViewById(R.id.etCelular1);
+        btnCancel = view.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainPage) requireActivity()).replaceFragmentList();
+            }
+        });
+
         btnSave = view.findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               //  ((MainPage) requireActivity()).replaceFragmentList();
                 try {
-                    savePaciente();
+                    if (paciente != null && paciente.getIdPaciente()>0)
+                    {editPaciente();}
+                    else{
+                        if (validarDatos())
+                        {savePaciente();}
+                        }
+
+
+
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
@@ -89,7 +106,8 @@ public class FragmentPaciente extends Fragment {
             etDni.setText(paciente.getNroDocumento());
             etCelular.setText(paciente.getCelular());
             etFono.setText(paciente.getTelefono());
-            etStartDate.setText(formatDateToString(paciente.getFechaNacimiento()));
+            //etStartDate.setText(formatDateToString(paciente.getFechaNaci()));
+            etStartDate.setText(paciente.getFechaNaci());
             etCorreo.setText(paciente.getCorreo());
 
         }
@@ -156,5 +174,73 @@ public class FragmentPaciente extends Fragment {
                 etApeMaterno.requestFocus();
             }
         });
+    }
+
+    private void editPaciente() throws ParseException {
+        MySingleton singleton = MySingleton.getInstance();
+        String dateString = etStartDate.getText().toString(); // String en formato dd/MM/yyyy
+        //  Date fechaNacimiento = convertStringToDate(dateString);
+
+        //     AlertUtils.showAlert(requireContext(), "Alerta...", "Fecha: " +  etStartDate.getText(), false);
+     //   PacienteDTO paciente = new PacienteDTO();
+        paciente.setIdPaciente(paciente.getIdPaciente());
+        paciente.setNombres(etName.getText().toString());
+        paciente.setApellidoPaterno(etApePaterno.getText().toString());
+        paciente.setApellidoMaterno(etApeMaterno.getText().toString());
+        paciente.setNroDocumento(etDni.getText().toString());
+        paciente.setCorreo(etCorreo.getText().toString());
+        paciente.setTelefono(etFono.getText().toString());
+        paciente.setCelular(etCelular.getText().toString());
+        paciente.setFechaNaci(dateString);
+        paciente.setIdUsuario(singleton.getIdUsuario());
+        paciente.setTipoDocumento(1);
+
+        Retrofit myRetrofit = MyApi.getInstance();
+        PacienteService myPacienteservice = myRetrofit.create(PacienteService.class);
+
+        myPacienteservice.editarPaciente(paciente).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if(response.isSuccessful()){
+                    //IPacienteService responseDTO = response.body();
+//                    PacienteDTO pacienteDTOS = responseDTO.value;
+//
+//                    if(responseDTO.status){
+//                        ((MainPage) requireActivity()).replaceFragmentList();
+//
+//                    }else{
+//                        AlertUtils.showAlert(requireContext(), "Alerta...", "1. Hubo un error de conexion ", false);
+//                        etApeMaterno.requestFocus();
+//                    }
+                }else{
+                    AlertUtils.showAlert(requireContext(), "Alerta...", "2. Hubo un respuesta de error ", false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                //Toast.makeText(view.c,"1. Existe un valor incorrecto...",Toast.LENGTH_LONG);
+                AlertUtils.showAlert(requireContext(), "Alerta...", "3. Hubo un error de conexion " + t.getMessage(), false);
+                etApeMaterno.requestFocus();
+            }
+        });
+    }
+
+    private boolean validarDatos(){
+        if (TextUtils.isEmpty(etName.getText().toString())||TextUtils.isEmpty(etApeMaterno.getText().toString())||TextUtils.isEmpty(etApePaterno.getText().toString())) {
+            AlertUtils.showAlert(requireContext(), "Alerta...", "1. Falta ingresar el nombre o apellidos...", false);
+            return false;
+        }
+        if (TextUtils.isEmpty(etStartDate.getText().toString())) {
+            AlertUtils.showAlert(requireContext(), "Alerta...", "2. Falta ingresar la fecha de nacimiento...", false);
+            return false;
+        }
+        if (TextUtils.isEmpty(etDni.getText().toString())) {
+            AlertUtils.showAlert(requireContext(), "Alerta...", "3. El DNI no puede ser vacio...", false);
+            return false;
+        }
+
+
+        return true;
     }
 }

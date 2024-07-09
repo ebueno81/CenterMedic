@@ -27,8 +27,48 @@ public class CitaDTO {
 
     public String especialidad;
 
-
     public String consultorio;
+
+    public String getNomEspecialidad() {
+        return nomEspecialidad;
+    }
+
+    public void setNomEspecialidad(String nomEspecialidad) {
+        this.nomEspecialidad = nomEspecialidad;
+    }
+
+    public String nomEspecialidad;
+
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String nombres;
+
+    public String apellidoPaterno;
+
+    public String apellidoMaterno;
 
     public int getIdCita() {
         return idCita;

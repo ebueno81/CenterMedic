@@ -1,7 +1,10 @@
 package com.example.centermedic.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -10,16 +13,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.centermedic.R;
+import com.example.centermedic.activity.Menu;
+import com.example.centermedic.activity.UserRegister;
+import com.example.centermedic.adapter.CitaListAdapter;
 import com.example.centermedic.adapter.PacienteListAdapter;
 import com.example.centermedic.api.MyApi;
 import com.example.centermedic.clases.CitaDTO;
 import com.example.centermedic.clases.PacienteDTO;
 import com.example.centermedic.clases.ResponseDTO;
+import com.example.centermedic.services.CitaService;
 import com.example.centermedic.services.PacienteService;
+import com.example.centermedic.utils.AlertUtils;
 
 import java.util.List;
 
@@ -31,11 +41,12 @@ import retrofit2.Retrofit;
 
 public class FragmentCita extends Fragment {
 
-    Spinner spPaciente;
-
+    TextView tvNombre, tvApePaterno, tvApeMaterno, tvDoctor, tvEspecialidad, tvHorario, tvFecha, tvConsultorio;
     CitaDTO citaDTO;
+    Button btnCancel;
     public FragmentCita(CitaDTO citaDTO) {
         this.citaDTO = citaDTO;
+
         // Required empty public constructor
     }
 
@@ -49,51 +60,67 @@ public class FragmentCita extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        spPaciente = view.findViewById(R.id.spPaciente);
 
-        Retrofit myRetrofit = MyApi.getInstance();
-        PacienteService myPacienteService = myRetrofit.create(PacienteService.class);
-        myPacienteService.listarPaciente(0,"").enqueue(new Callback<ResponseDTO<PacienteDTO>>() {
+        tvNombre = view.findViewById(R.id.tvNombres);
+        tvApePaterno = view.findViewById(R.id.tvApePat);
+        tvApeMaterno = view.findViewById(R.id.tvApeMat);
+        tvDoctor = view.findViewById(R.id.tvMedico);
+        tvEspecialidad = view.findViewById(R.id.tvEspecialidad);
+        tvFecha = view.findViewById(R.id.tvFecha);
+        tvHorario = view.findViewById(R.id.tvHora);
+        tvConsultorio = view.findViewById(R.id.tvConsultorio);
+        btnCancel = view.findViewById(R.id.btnCancel);
+
+        handlePacienteSelection(citaDTO.getIdCita());
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<ResponseDTO<PacienteDTO>> call, Response<ResponseDTO<PacienteDTO>> response) {
+            public void onClick(View view) {
+                Intent intent = new Intent(requireContext(), Menu.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+    // Función para manejar la selección del paciente
+    private void handlePacienteSelection(Integer idCita) {
+
+    //    AlertUtils.showAlert(requireContext(), "Alerta...", "Cita seleccionada: " + citaDTO.getIdCita() , false);
+        Retrofit myRetrofit = MyApi.getInstance();
+        CitaService myCitaService = myRetrofit.create(CitaService.class);
+        myCitaService.obtenerRegistro(idCita).enqueue(new Callback<ResponseDTO<CitaDTO>>() {
+            @Override
+            public void onResponse(Call<ResponseDTO<CitaDTO>> call, Response<ResponseDTO<CitaDTO>> response) {
                 if (response.isSuccessful()) {
                     ResponseDTO responseDTO = response.body();
                     if (responseDTO.status){
-                        List<PacienteDTO> lstPaciente = responseDTO.value;
-                        PacienteListAdapter adapter = new PacienteListAdapter(requireContext(), lstPaciente);
-                        spPaciente.setAdapter(adapter);
-                        spPaciente.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                // Obtener el objeto seleccionado
-                                PacienteDTO selectedPaciente = (PacienteDTO) parent.getItemAtPosition(position);
-                                // Obtener el idPaciente
-                                Integer idPaciente = selectedPaciente.getIdPaciente();
-                                // Llamar a una función con el idPaciente
-                                handlePacienteSelection(idPaciente);
-                            }
+                        List<CitaDTO> lstDatos = responseDTO.value;
+                        CitaDTO cita = new CitaDTO();
+                        cita = lstDatos.get(0);
+                        tvNombre.setText(cita.getNombres().toString());
+                        tvApePaterno.setText(cita.getApellidoPaterno().toString());
+                        tvApeMaterno.setText(cita.getApellidoMaterno().toString());
+                        tvDoctor.setText(cita.getDoctor().toString());
+                        tvEspecialidad.setText(cita.getNomEspecialidad().toString());
+                        tvFecha.setText(cita.getFecha().toString());
+                        tvHorario.setText(cita.getHora().toString());
+                        tvConsultorio.setText(cita.getConsultorio().toString());
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                                // Manejar el caso cuando no se selecciona nada, si es necesario
-                            }
-                        });
                     }else{
-                        Toast.makeText(view.getContext(),"2. Usuario o clave incorrecta...",Toast.LENGTH_LONG);
+                        AlertUtils.showAlert(requireContext(), "Alerta...", "1. Problemas al conectarse " + citaDTO.getIdCita() , false);
+
                     }
+
+                } else {
+
+                    System.out.println("Error: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseDTO<PacienteDTO>> call, Throwable t) {
-                Toast.makeText(view.getContext(),"2. Usuario o clave incorrecta...",Toast.LENGTH_LONG);
+            public void onFailure(Call<ResponseDTO<CitaDTO>> call, Throwable t) {
+                AlertUtils.showAlert(requireContext(), "Alerta...", "2. Problemas al conectarse " + citaDTO.getIdCita() , false);
             }
         });
-    }
-    // Función para manejar la selección del paciente
-    private void handlePacienteSelection(Integer idPaciente) {
-        // Implementar la lógica que necesitas con el idPaciente
-        Toast.makeText(requireContext(), "Paciente seleccionado ID: " + idPaciente, Toast.LENGTH_SHORT).show();
-        // Aquí puedes llamar a otra función o realizar la acción deseada con el idPaciente
     }
 }

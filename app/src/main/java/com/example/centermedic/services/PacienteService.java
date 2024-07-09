@@ -20,7 +20,7 @@ public interface PacienteService {
     @POST("paciente/guardar")
     Call<IPacienteService> crearPaciente(@Body PacienteDTO miPaciente);
     @PUT("paciente/editar")
-    Call<IPacienteService> editarPaciente(@Body PacienteDTO miPaciente);
+    Call<Boolean> editarPaciente(@Body PacienteDTO miPaciente);
     @GET("paciente/listar")
     Call<ResponseDTO<PacienteDTO>> listarPaciente(@Query("idUsuario") int idUsuario, @Query("valor") String valor);
 }

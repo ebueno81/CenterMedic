@@ -31,9 +31,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-130dp"
                 android:layout_marginLeft="10sp"
-                android:text="Crear
-
-                Cuenta"
+                android:text="Crear"
+                android:textColor="#ffffff"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txtCrearCuenta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="10sp"
+                android:text="Cuenta"
                 android:textColor="#ffffff"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -167,19 +175,6 @@
             android:gravity="center">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnCancel"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_background_red"
-                android:text="Cancelar"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                android:layout_marginEnd="8dp"/>
-
-            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSave"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
@@ -189,7 +184,23 @@
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:layout_marginRight="10dp"
                 android:textAllCaps="false"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10sp"
+                android:layout_weight="1"
+                android:background="@drawable/button_background_red"
+                android:text="Cancelar"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:layout_marginEnd="8dp"/>
+
         </LinearLayout>
 
     </LinearLayout>

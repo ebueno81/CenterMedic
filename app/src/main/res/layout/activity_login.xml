@@ -227,10 +227,10 @@
                     android:layout_marginTop="24dp"
                     android:background="@drawable/button_background"
                     android:text="@string/inicio_session"
+                    android:textAllCaps="false"
                     android:textColor="#ffffff"
                     android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textAllCaps="false"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <ProgressBar

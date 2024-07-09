@@ -1,5 +1,6 @@
 package com.example.centermedic.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -38,7 +39,7 @@ import retrofit2.Retrofit;
 
 public class Sede extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener, OnItemClickListenerSede {
 
-    EditText etLatitud, etLongitud;
+    EditText etLatitud, etLongitud, etSede;
     private ProgressBar progressBar;
     public GoogleMap mMap;
     RecyclerView recycler;
@@ -51,6 +52,7 @@ public class Sede extends AppCompatActivity implements OnMapReadyCallback, Googl
 
         etLatitud = findViewById(R.id.etLatitud);
         etLongitud = findViewById(R.id.etLongitud);
+        etSede = findViewById(R.id.etSede);
         recycler = findViewById(R.id.recycler_id);
         progressBar = findViewById(R.id.progressBar);
         btnRegresar = findViewById(R.id.btnRegresar);
@@ -62,16 +64,37 @@ public class Sede extends AppCompatActivity implements OnMapReadyCallback, Googl
             }
         });
 
-        etLatitud.setText("-11.9678154");
-        etLongitud.setText("-76.9982021");
+        if (hasLastLocation()) {
+            etLatitud.setText(getLastLatitude());
+            etLongitud.setText(getLastLongitude());
+            etSede.setText(getLastName());
+        } else {
+            // Valores por defecto si no hay datos en SharedPreferences
+            etLatitud.setText("-11.9678154");
+            etLongitud.setText("-76.9982021");
+            etSede.setText("San Juan");
+        }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
-            cargarSedes(0);
         } else {
             Toast.makeText(this, "Error al cargar el mapa", Toast.LENGTH_SHORT).show();
         }
+
+        cargarSedes(0);
+//        // valor por defecto
+//        etSede.setText("Sede San Juan");
+//        etLatitud.setText("-11.9678154");
+//        etLongitud.setText("-76.9982021");
+//
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+//        if (mapFragment != null) {
+//            mapFragment.getMapAsync(this);
+//            cargarSedes(0);
+//        } else {
+//            Toast.makeText(this, "Error al cargar el mapa", Toast.LENGTH_SHORT).show();
+//        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -137,12 +160,54 @@ public class Sede extends AppCompatActivity implements OnMapReadyCallback, Googl
 
     @Override
     public void onItemClick(SedeDTO item) {
-        etLatitud.setText(item.getLatitud());
-        etLongitud.setText(item.getLongitud());
+        String latitude = item.getLatitud();
+        String longitude = item.getLongitud();
+        String name = item.getNombre();
 
-        LatLng selectedLocation = new LatLng(Double.parseDouble(item.getLatitud()), Double.parseDouble(item.getLongitud()));
+        etLatitud.setText(latitude);
+        etLongitud.setText(longitude);
+        etSede.setText(name);
+
+        saveLastLocation(latitude, longitude, name);
+
+        LatLng selectedLocation = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
         mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(selectedLocation).title(item.getNombre()));
+        mMap.addMarker(new MarkerOptions().position(selectedLocation).title(name));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedLocation, 15));
+    }
+
+    // Nombre del archivo de preferencias y las claves
+    private static final String PREFS_NAME = "LocationPrefs";
+    private static final String KEY_LATITUDE = "last_latitude";
+    private static final String KEY_LONGITUDE = "last_longitude";
+    private static final String KEY_NAME = "last_name";
+
+    private void saveLastLocation(String latitude, String longitude, String name) {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_LATITUDE, latitude);
+        editor.putString(KEY_LONGITUDE, longitude);
+        editor.putString(KEY_NAME, name);
+        editor.apply();
+    }
+
+    private boolean hasLastLocation() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        return sharedPreferences.contains(KEY_LATITUDE) && sharedPreferences.contains(KEY_LONGITUDE) && sharedPreferences.contains(KEY_NAME);
+    }
+
+    private String getLastLatitude() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_LATITUDE, "-11.9678154"); // Valor por defecto
+    }
+
+    private String getLastLongitude() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_LONGITUDE, "-76.9982021"); // Valor por defecto
+    }
+
+    private String getLastName() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_NAME, "San Juan"); // Valor por defecto
     }
 }

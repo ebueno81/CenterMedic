@@ -1,5 +1,6 @@
 package com.example.centermedic.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,11 +24,13 @@ import android.widget.Toast;
 import com.example.centermedic.R;
 import com.example.centermedic.activity.Login;
 import com.example.centermedic.activity.MainPage;
+import com.example.centermedic.activity.Menu;
 import com.example.centermedic.activity.PacienteBuscar;
 import com.example.centermedic.adapter.PacienteAdapter;
 import com.example.centermedic.api.MyApi;
 import com.example.centermedic.clases.PacienteDTO;
 import com.example.centermedic.clases.ResponseDTO;
+import com.example.centermedic.datahelper.SearchDatabaseHelper;
 import com.example.centermedic.services.OnItemClickListener;
 import com.example.centermedic.services.PacienteService;
 import com.example.centermedic.utils.AlertUtils;
@@ -42,11 +45,13 @@ import retrofit2.Retrofit;
 
 public class FragmentPacienteList extends Fragment implements OnItemClickListener {
 
-    ImageButton ibNuevo;
+    ImageButton ibNuevo, ibCancel;
     EditText etBuscar;
     RecyclerView recycler;
     private Handler handler = new Handler();
     private Runnable runnable;
+
+
   //  private RecyclerView.Adapter adapterPacienteList;
     private ProgressBar progressBar;
 
@@ -67,6 +72,16 @@ public class FragmentPacienteList extends Fragment implements OnItemClickListene
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         progressBar = view.findViewById(R.id.progressBar);
+
+        ibCancel = view.findViewById(R.id.ibCancel);
+        ibCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i1 = new Intent(requireActivity(), Menu.class);
+                startActivity(i1);
+            }
+        });
+
         ibNuevo = view.findViewById(R.id.ibNuevo);
         ibNuevo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +91,9 @@ public class FragmentPacienteList extends Fragment implements OnItemClickListene
         });
 
         recycler = view.findViewById(R.id.recycler_id);
+
+
+
         cargarPaciente("");
 
         etBuscar = view.findViewById(R.id.etBuscar);
@@ -95,6 +113,7 @@ public class FragmentPacienteList extends Fragment implements OnItemClickListene
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 // Crear un nuevo runnable para ejecutar después de 3 segundos
                 runnable = new Runnable() {
                     @Override

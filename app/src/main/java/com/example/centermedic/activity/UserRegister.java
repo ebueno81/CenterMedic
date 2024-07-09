@@ -65,6 +65,8 @@ public class UserRegister extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(UserRegister.this, Menu.class);
+                startActivity(intent);
                 finish();
             }
         });

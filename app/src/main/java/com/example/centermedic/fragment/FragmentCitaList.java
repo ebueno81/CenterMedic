@@ -39,7 +39,7 @@ import retrofit2.Retrofit;
 
 public class FragmentCitaList extends Fragment implements OnItemClickListenerCita {
 
-    ImageButton ibNuevo;
+    ImageButton ibNuevo, ibCancel;
     RecyclerView recycler;
    // private RecyclerView.Adapter adapterCitaList;
     public FragmentCitaList() {
@@ -56,6 +56,14 @@ public class FragmentCitaList extends Fragment implements OnItemClickListenerCit
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ibCancel = view.findViewById(R.id.ibCancel);
+        ibCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i1 = new Intent(requireActivity(), Menu.class);
+                startActivity(i1);
+            }
+        });
         ibNuevo = view.findViewById(R.id.ibNuevo);
         ibNuevo.setOnClickListener(new View.OnClickListener() {
             @Override
